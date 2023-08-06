@@ -11,6 +11,10 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
+//routes
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+
 const CustomError = require("./utils/customError");
 const globalErrorController = require("./controller/errorController");
 
@@ -18,13 +22,16 @@ dotenv.config({ path: path.relative(__dirname, ".env") });
 
 const PORT = process.env.PORT;
 const MONGODB_CONNECT_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_USER_PASSWORD}@cluster0.batd5r2.mongodb.net/?retryWrites=true&w=majority`;
-const MONGODB_LOCAL_CONNECT_URL = `${process.env.MONGO_DB_LOCAL_URL}${process.env.MONGODB_LOCAL_DB}`;
+const MONGODB_LOCAL_CONNECT_URL = `${process.env.MONGO_DB_LOCAL_URL}/${process.env.MONGODB_LOCAL_DB}`;
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.text());
+
+app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 // This will match all routes so keep it at last.
 // If express didn't find any matching route above, the below callback function will be invoked.
