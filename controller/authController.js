@@ -24,15 +24,21 @@ const getGoogleAccessTokenController = async (req, res, next) => {
   const { accessToken, refreshToken } = await getGoogleAccessToken(code);
 
   res.status(200).json({
-    accessToken,
-    refreshToken,
+    status: "success",
+    data: {
+      accessToken,
+      refreshToken,
+    },
   });
 };
 
 const getNewAccessTokenController = (req, res, next) => {
   const newAccessToken = getNewAccessToken(req.user);
   res.status(200).json({
-    accessToken: newAccessToken,
+    status: "success",
+    data: {
+      accessToken: newAccessToken,
+    },
   });
 };
 

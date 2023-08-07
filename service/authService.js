@@ -10,7 +10,7 @@ const { validateUser } = require("../models/user.model");
 
 const getGoogleOAuthURL = () => {
   const options = {
-    redirect_uri: `${process.env.CLIENT_ROOT_URL}/authentication-success`,
+    redirect_uri: `${process.env.CLIENT_ROOT_URL}/google-callback`,
     client_id: process.env.GOOGLE_CLIENT_ID,
     access_type: "offline",
     response_type: "code",
@@ -37,7 +37,7 @@ const getGoogleAccessToken = async (code) => {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `${process.env.CLIENT_ROOT_URL}/authentication-success`,
+      redirect_uri: `${process.env.CLIENT_ROOT_URL}/google-callback`,
       grant_type: "authorization_code",
     }),
   });

@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // this will called for all uncaught exception errors for sync process
 // always should be top in order to catch all uncaught error in code base
@@ -25,6 +26,8 @@ const MONGODB_CONNECT_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process
 const MONGODB_LOCAL_CONNECT_URL = `${process.env.MONGO_DB_LOCAL_URL}/${process.env.MONGODB_LOCAL_DB}`;
 
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
