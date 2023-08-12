@@ -15,8 +15,16 @@ const findUserById = async (id) => {
   return userData;
 };
 
+const updateUserFriendList = async(id, friendEmail) => {
+  await User.updateOne(
+    { _id: id },
+    { $addToSet: { friendList: friendEmail } }
+  );
+}
+
 module.exports = {
   createUser,
   findUserByEmail,
   findUserById,
+  updateUserFriendList
 };
