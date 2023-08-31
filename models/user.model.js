@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String },
   pictureURL: { type: String },
   friendList: [{ type: String, unique: true }],
+  connectionStatus: { type: String, required: true },
 });
 
 const User = mongoose.model("User", userSchema);
@@ -20,6 +21,7 @@ const validateUser = (user) => {
     lastName: Joi.string(),
     pictureURL: Joi.string(),
     friendList: Joi.array().items(Joi.string().email()).unique(),
+    connectionStatus: Joi.string().valid(ONLINE, OFFLINE).required(),
   });
 
   return schema.validate(user);
