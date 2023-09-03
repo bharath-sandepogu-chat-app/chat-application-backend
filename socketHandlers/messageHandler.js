@@ -25,16 +25,12 @@ const messageHandler = (io, socket) => {
         const updatedMessage = await addMessage(message);
         callback(null, updatedMessage);
         socket
-          .to(message.from)
           .to(message.to)
           .emit("privateMessage", updatedMessage, newFromUserDetailsToSend);
       } else {
         const updatedMessage = await addMessage(message);
         callback(null, updatedMessage);
-        socket
-          .to(message.from)
-          .to(message.to)
-          .emit("privateMessage", updatedMessage);
+        socket.to(message.to).emit("privateMessage", updatedMessage);
       }
     } catch (error) {
       callback(error, null);
