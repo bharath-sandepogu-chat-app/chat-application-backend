@@ -1,11 +1,16 @@
 const nodemailer = require("nodemailer");
 
 var transport = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
+  service: "gmail",
+  port: 587,
+  secure: true,
+  tls: {
+    rejectUnauthorized: true,
+    minVersion: "TLSv1.2",
+  },
   auth: {
-    user: "7086b53c388e38",
-    pass: "1c8cdf3b3239f9",
+    user: "testemail9121@gmail.com",
+    pass: "tpizygcgppixhjtd",
   },
 });
 function sendMail(toEmail) {

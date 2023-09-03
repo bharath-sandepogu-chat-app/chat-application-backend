@@ -14,6 +14,6 @@ const { verifyRefreshToken } = require("../middleware/verifyToken");
 
 router.get("/google/url", getGoogleAuthController);
 router.get("/google/login", asyncErrorHandler(getGoogleAccessTokenController));
-router.get("/renew-token", verifyRefreshToken, getNewAccessTokenController);
+router.post("/renew-token", verifyRefreshToken, getNewAccessTokenController);
 
 module.exports = router;

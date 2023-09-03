@@ -1,4 +1,8 @@
-const { findUserById, updateUserFriendList } = require("../store/userStore");
+const {
+  findUserById,
+  updateUserFriendList,
+  findUserFriendDetailsList,
+} = require("../store/userStore");
 const { sendMail } = require("../config/nodemailer.js");
 
 const getUserDetailsById = async (id) => {
@@ -15,7 +19,13 @@ const mailChatRequest = async (id, toEmail) => {
   return `sent mail to ${toEmail}`;
 };
 
+const getFriendDetailsList = async (id) => {
+  const resList = await findUserFriendDetailsList(id);
+  return resList;
+};
+
 module.exports = {
   getUserDetailsById,
   mailChatRequest,
+  getFriendDetailsList,
 };

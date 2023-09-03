@@ -1,6 +1,7 @@
 const {
   getUserDetailsById,
   mailChatRequest,
+  getFriendDetailsList,
 } = require("../service/userService");
 const CustomError = require("../utils/customError");
 
@@ -24,11 +25,23 @@ const mailChatRequestController = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    body: mailResponse,
+    data: mailResponse,
+  });
+};
+
+const getFriendDetailsListController = async (req, res, next) => {
+  const id = req.user.id;
+
+  const friendDetailsList = await getFriendDetailsList(id);
+
+  res.status(200).json({
+    status: "success",
+    data: friendDetailsList,
   });
 };
 
 module.exports = {
   getUserDetailsController,
   mailChatRequestController,
+  getFriendDetailsListController,
 };
