@@ -4,8 +4,9 @@ const {
   recentChatsWithMessages,
   updateAllUnReadMessageStatus,
   moreMessagesFromUser,
+  updateMessageStatus,
 } = require("../store/messageStore");
-const { SEND, READ } = require("../utils/modalConstants");
+const { SEND, READ, DELIVERED } = require("../utils/modalConstants");
 const CustomError = require("../utils/customError");
 
 const addMessage = async (messageDetails) => {
@@ -45,9 +46,16 @@ const getMoreMessagesFromUser = async (messageId, from, to) => {
   return moreMessages;
 };
 
+const updateDeliveryMessageStatus = async (messageId) => {
+  const updatedMessage = await updateMessageStatus(messageId, DELIVERED);
+
+  return updatedMessage;
+};
+
 module.exports = {
   addMessage,
   getRecentChatsWithMessages,
   updateUnReadMessages,
   getMoreMessagesFromUser,
+  updateDeliveryMessageStatus,
 };

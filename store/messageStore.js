@@ -208,9 +208,8 @@ const moreMessagesFromUser = async (messageId, from, to) => {
     },
   ];
 
-  const moreMessagesObj = await Message.aggregate(pipeline);
-
-  return moreMessagesObj;
+  const moreMessagesArr = await Message.aggregate(pipeline);
+  return moreMessagesArr[0];
 };
 
 module.exports = {

@@ -21,13 +21,16 @@ const getGoogleAccessTokenController = async (req, res, next) => {
     return next(new CustomError(400, "Missing required query parameter: code"));
   }
 
-  const { accessToken, refreshToken } = await getGoogleAccessToken(code);
+  const { accessToken, refreshToken, socketToken } = await getGoogleAccessToken(
+    code
+  );
 
   res.status(200).json({
     status: "success",
     data: {
       accessToken,
       refreshToken,
+      socketToken,
     },
   });
 };

@@ -1,9 +1,11 @@
 const express = require("express");
+const http = require("http");
 const dotenv = require("dotenv");
 const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { Server } = require("socket.io");
 
 // this will called for all uncaught exception errors for sync process
 // always should be top in order to catch all uncaught error in code base
@@ -19,6 +21,12 @@ const userRoutes = require("./routes/userRoutes");
 const CustomError = require("./utils/customError");
 const globalErrorController = require("./controller/errorController");
 
+const {
+  verifySocketConnection,
+} = require("./middleware/verifySocketConnection");
+const messageHandler = require("./socketHandlers/messageHandler");
+const connectionHandler = require("./socketHandlers/connectionHandler");
+
 dotenv.config({ path: path.relative(__dirname, ".env") });
 
 const PORT = process.env.PORT;
@@ -26,6 +34,22 @@ const MONGODB_CONNECT_URL = `mongodb+srv://${process.env.MONGODB_USER}:${process
 const MONGODB_LOCAL_CONNECT_URL = `${process.env.MONGO_DB_LOCAL_URL}/${process.env.MONGODB_LOCAL_DB}`;
 
 const app = express();
+
+const server = http.createServer(app);
+
+// sockets server engine.io
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_ROOT_URL,
+  },
+});
+
+io.use(verifySocketConnection);
+
+io.on("connection", (socket) => {
+  messageHandler(io, socket);
+  connectionHandler(io, socket);
+});
 
 app.use(cors());
 
@@ -59,7 +83,7 @@ async function connectToDatabase() {
 
 connectToDatabase();
 
-const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`app listening to port ${PORT}`);
 });
 

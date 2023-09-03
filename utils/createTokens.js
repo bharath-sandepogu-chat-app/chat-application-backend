@@ -26,7 +26,24 @@ const createRefreshToken = ({ id, email }) => {
   return refreshToken;
 };
 
+const createSocketToken = ({ id, email }) => {
+  const socketToken = jwt.sign(
+    {
+      id,
+      email,
+      tokenType: "socket",
+    },
+    process.env.JWT_SOCKET_SECRET_KEY,
+    {
+      expiresIn: "1y",
+    }
+  );
+
+  return socketToken;
+};
+
 module.exports = {
   createAccessToken,
   createRefreshToken,
+  createSocketToken,
 };

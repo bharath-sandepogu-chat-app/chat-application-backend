@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
 const { findUserByEmail, createUser } = require("../store/userStore");
 const CustomError = require("../utils/customError");
 const { getURLQueryStringFromObj } = require("../utils/url");
 const {
   createAccessToken,
   createRefreshToken,
+  createSocketToken,
 } = require("../utils/createTokens");
 const { validateUser } = require("../models/user.model");
 
@@ -88,7 +88,7 @@ const getGoogleAccessToken = async (code) => {
     dbUserData = userData;
   }
 
-  // create access and refresh tokens
+  // create access, refresh and socket tokens
   const accessToken = createAccessToken({
     id: dbUserData._id,
     email: dbUserData.email,
@@ -99,9 +99,15 @@ const getGoogleAccessToken = async (code) => {
     email: dbUserData.email,
   });
 
+  const socketToken = createSocketToken({
+    id: dbUserData._id,
+    email: dbUserData.email,
+  });
+
   return {
     accessToken,
     refreshToken,
+    socketToken,
   };
 };
 

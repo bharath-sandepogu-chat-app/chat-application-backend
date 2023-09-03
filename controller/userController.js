@@ -25,7 +25,7 @@ const mailChatRequestController = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    body: mailResponse,
+    data: mailResponse,
   });
 };
 
