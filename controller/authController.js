@@ -2,6 +2,7 @@ const {
   getGoogleOAuthURL,
   getGoogleAccessToken,
   getNewAccessToken,
+  getDemoUserToken,
 } = require("../service/authService");
 const CustomError = require("../utils/customError");
 
@@ -35,6 +36,25 @@ const getGoogleAccessTokenController = async (req, res, next) => {
   });
 };
 
+const getDemoUserTokenController = async (req, res, next) => {
+  const tokens = await getDemoUserToken();
+
+  if (!tokens) {
+    return next(new CustomError(404, "user not found"));
+  }
+
+  const { accessToken, refreshToken, socketToken } = await getDemoUserToken();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      accessToken,
+      refreshToken,
+      socketToken,
+    },
+  });
+};
+
 const getNewAccessTokenController = (req, res, next) => {
   const newAccessToken = getNewAccessToken(req.user);
   res.status(200).json({
@@ -49,4 +69,5 @@ module.exports = {
   getGoogleAuthController,
   getGoogleAccessTokenController,
   getNewAccessTokenController,
+  getDemoUserTokenController,
 };
