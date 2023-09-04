@@ -111,6 +111,34 @@ const getGoogleAccessToken = async (code) => {
   };
 };
 
+const getDemoUserToken = async () => {
+  const demoUserDetails = await findUserByEmail(process.env.DEMO_USER_MAIL);
+
+  if (!demoUserDetails) return null;
+
+  // create access, refresh and socket tokens
+  const accessToken = createAccessToken({
+    id: demoUserDetails._id,
+    email: demoUserDetails.email,
+  });
+
+  const refreshToken = createRefreshToken({
+    id: demoUserDetails._id,
+    email: demoUserDetails.email,
+  });
+
+  const socketToken = createSocketToken({
+    id: demoUserDetails._id,
+    email: demoUserDetails.email,
+  });
+
+  return {
+    accessToken,
+    refreshToken,
+    socketToken,
+  };
+};
+
 const getNewAccessToken = (payload) => {
   return createAccessToken(payload);
 };
@@ -119,4 +147,5 @@ module.exports = {
   getGoogleOAuthURL,
   getGoogleAccessToken,
   getNewAccessToken,
+  getDemoUserToken,
 };
