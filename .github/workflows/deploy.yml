@@ -15,7 +15,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   REGION: 'us-central1'
   PORT: 8000
-  DOCKERFILE_PATH: '../'
+  DOCKERFILE_PATH: './'
   CLOUD_RUN_SERVICE: 'chat-application-deploy'
 
 jobs:
