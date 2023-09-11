@@ -6,7 +6,7 @@ on:
       - test
 
 env:
-  WORKLOAD_IDENTITY_PROVIDER: 'projects/316198024683/locations/global/workloadIdentityPools/github-actions/providers/github-actions-providers'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/316198024683/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider'
   SERVICE_ACCOUNT: 'chat-application@chat-app-398717.iam.gserviceaccount.com'
   REGISTRY: 'us-central1-docker.pkg.dev'
   PROJECT_ID: 'chat-app-398717'
