@@ -15,7 +15,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   REGION: 'us-central1'
   PORT: 8000
-  DOCKERFILE_PATH: './'
+  DOCKERFILE_PATH: '../'
   CLOUD_RUN_SERVICE: 'chat-application-deploy'
 
 jobs:
@@ -71,6 +71,7 @@ jobs:
       - name: Build Docker image
         id: docker_build
         run: |
+          ls
           docker build -t ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_DIR }}:${{ env.IMAGE_TAG }} ${{ env.DOCKERFILE_PATH }}
           echo "IMAGE_NAME=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_DIR }}:${{ env.IMAGE_TAG }}"
           echo "IMAGE_NAME=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_DIR }}:${{ env.IMAGE_TAG }}" >> $GITHUB_ENV
